@@ -62,7 +62,6 @@ class Manacher{
                     }
                 }
                 else{
-                    // por que l + (r-1) + 1 e não l + (r-1)???
                     even[i] = min(even[l + (r-i) + 1], r-i+1);
                     for(int k = even[i]+1; (i-k >= 0) && (i+k-1 < n) ; k++){
                         if(s[i-k] == s[i+k-1]){
