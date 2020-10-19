@@ -1,4 +1,4 @@
-class ZFunc{
+ class ZFunc{
     public:
         string s;
         string p;
@@ -49,5 +49,25 @@ class ZFunc{
                     indexes.push_back(i - p.size() - 1);
             }
             return indexes;
+        }
+
+        string smallestCyclicPrefix(){
+            stack<int> divisors;
+            for(int i = 1 ; i <= sqrt(n) ; i++){
+                if(n%i == 0){
+                    if(Z[i] + i == n)
+                        return s.substr(0,i);
+                    if(i!=1)
+                        divisors.push(i);
+                }
+            }
+            while(!divisors.empty()){
+                int i = divisors.top();
+                divisors.pop();
+                int div = n/i;
+                if(Z[div] + div == n)
+                    return s.substr(0,div);
+            }
+            return s.substr(0,n);
         }
 };
