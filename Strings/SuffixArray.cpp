@@ -12,7 +12,6 @@ class SuffixArray{
             build();
         }
         void radixSort(vector<pair<pair<int,int>,int>> &v){
-            int m = v.size();
             int firstBuckets = 0;
             int secondBuckets = 0;
             for(pair<pair<int,int>,int> p : v){
@@ -25,24 +24,18 @@ class SuffixArray{
                 count1[p.first.second]++;
                 count2[p.first.first]++;
             }
-            vector<int> acSum1(firstBuckets);
-            vector<int> acSum2(secondBuckets);
-            acSum1[0] = count1[0];
-            acSum2[0] = count2[0];
-            for(int i = 1 ; i < max(firstBuckets,secondBuckets); i++){
-                if(i < firstBuckets){
-                    acSum1[i] = acSum1[i-1] + count1[i];
-                }
-                if(i < secondBuckets){
-                    acSum2[i] = acSum2[i-1] + count2[i];
-                }
+            for(int i = 1 ; i < firstBuckets; i++){
+                count1[i] += count1[i-1];
+            }
+            for(int i = 1 ; i < secondBuckets ; i++){
+                count2[i] += count2[i-1];
             }
             vector<pair<pair<int,int>,int>> temp = v;
             int i = 0;
             for(pair<pair<int,int>,int> p : v){
                 if(p.first.second > 0){
-                    temp[acSum1[p.first.second-1]] = p;
-                    acSum1[p.first.second-1]++;
+                    temp[count1[p.first.second-1]] = p;
+                    count1[p.first.second-1]++;
                 }
                 else{
                     temp[i] = p;
@@ -52,8 +45,8 @@ class SuffixArray{
             i = 0;
             for(pair<pair<int,int>,int> p : temp){
                 if(p.first.first > 0){
-                    v[acSum2[p.first.first-1]] = p;
-                    acSum2[p.first.first-1]++;
+                    v[count2[p.first.first-1]] = p;
+                    count2[p.first.first-1]++;
                 }
                 else{
                     v[i] = p;
