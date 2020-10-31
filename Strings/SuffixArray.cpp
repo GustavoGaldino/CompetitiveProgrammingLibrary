@@ -96,4 +96,42 @@ class SuffixArray{
                 suffixArray[i] = temp[i].second;
             }
         }
+        bool isSubstring(string p){
+            int sz = p.size();
+            int l = 0;
+            int r = n-1;
+            while(r-l>1){
+                int m =(r+l)/2;
+                for(int i = 0, cur = suffixArray[m] ; i < sz ; i++, cur++){
+                    if(cur == n){
+                        cur =0;
+                    }
+                    if(s[cur] > p[i]){
+                        r = m;
+                        break;
+                    }
+                    else if(s[cur] < p[i]){
+                        l = m;
+                        break;
+                    }
+                    else if(i == sz-1){
+                        return true;
+                    }
+                }
+            }
+            for(int k = l ; k <= r ; k++){
+                for(int i = 0, cur = suffixArray[k] ; i < sz ; i++, cur++){
+                    if(cur == n){
+                        cur =0;
+                    }
+                    if((s[cur] > p[i]) || (s[cur] < p[i])){
+                        break;
+                    }
+                    else if(i == sz-1){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 };
