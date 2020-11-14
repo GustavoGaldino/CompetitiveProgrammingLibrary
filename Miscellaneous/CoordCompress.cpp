@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 vector<int> coordCompress(vector<int> a){
     int cur = 0;
     int n = a.size();
@@ -23,14 +20,4 @@ vector<int> coordCompress(vector<int> a){
         coordCompress[i] = aux[b[i]];
     }
     return coordCompress;
-}
-
-int main(){
-    vector<int> a{21,3,40,2,1,0,-1,30};
-    vector<int> u = coordCompress(a);
-    for(int cur : u){
-        cout << cur << " ";
-    }
-    cout << endl;
-    return 0;
 }
